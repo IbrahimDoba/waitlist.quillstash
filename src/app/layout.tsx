@@ -23,8 +23,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://waitlist.quillstash.com',
-    title: 'Join the ThumbForgeAi Waitlist - AI-powered YouTube Thumbnail Generator',
-    description: 'Get early access to ThumbForgeAi, the AI-powered tool for creating high-quality YouTube thumbnails with ease. Be part of the waitlist and transform your YouTube content!',
+    title: 'ThumbForgeAi Waitlist',
+    description: 'Get early access to ThumbForgeAi, the AI-powered tool for creating high-quality YouTube thumbnails with ease.',
     siteName: 'ThumbForgeAi Waitlist',
     images: [
       {
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@DobaIbrahim',
-    title: 'Join the ThumbForgeAi Waitlist - AI-powered YouTube Thumbnail Generator',
+    title: 'ThumbForgeAi Waitlist ',
     description: 'Sign up for early access to ThumbForgeAi, the AI-powered tool for creating professional YouTube thumbnails with ease.',
     images: ['https://waitlist.quillstash.com/assets/og-image.png'],
   },
