@@ -16,6 +16,7 @@ import confetti from "canvas-confetti";
 export default function Waitlist() {
   const [email, setEmail] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const [userId, setUserId] = useState<number | null>(null);
   const handleConfettiClick = () => {
     const end = Date.now() + 3 * 1000; // 3 seconds
@@ -49,6 +50,7 @@ export default function Waitlist() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true)
 
     try {
       const res = await fetch("/api/waitlist", {
@@ -62,6 +64,7 @@ export default function Waitlist() {
       const data = await res.json();
       console.log(data);
       setUserId(data.id);
+      setIsSubmitting(false)
       setIsModalOpen(true);
       handleConfettiClick()
     } catch (error) {
@@ -113,8 +116,8 @@ export default function Waitlist() {
             required
             className="mb-4 w-full"
           />
-          <Button type="submit" variant="solid"  className="w-full bg-blue-600 text-white">
-            Join Waitlist
+       <Button type="submit" variant="solid"  className="w-full bg-blue-600 text-white">
+       {isSubmitting ? 'Joining Waitlist...' : " Join Waitlist" }  
           </Button>
         </form>
         <Modal isOpen={isModalOpen} onClose={closeHandler}>
