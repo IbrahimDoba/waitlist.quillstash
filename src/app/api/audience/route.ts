@@ -6,12 +6,12 @@ const audienceId = process.env.RESEND_AUDIENCE_ID;
 export async function POST(request: Request) {
   const { email } = await request.json();
 
-  if (!email || !email.includes("@")) {
-    return NextResponse.json(
-      { error: "Invalid email address" },
-      { status: 400 }
-    );
-  }
+  // if (!email || !email.includes("@")) {
+  //   return NextResponse.json(
+  //     { error: "Invalid email address" },
+  //     { status: 400 }
+  //   );
+  // }
   resend.contacts.create({
     email,
     unsubscribed: false,

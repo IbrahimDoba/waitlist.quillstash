@@ -48,12 +48,6 @@ export const metadata: Metadata = {
     icon: '/favicon.ico',
    
   },
-
-  themeColor: "#ffffff",
-
-  alternates: {
-    canonical: 'https://thumbforgeai.com/waitlist',
-  },
 };
 
 export default function RootLayout({
