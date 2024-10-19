@@ -16,7 +16,7 @@ import confetti from "canvas-confetti";
 export default function Waitlist() {
   const [email, setEmail] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [userId, setUserId] = useState<number | null>(null);
   const handleConfettiClick = () => {
     const end = Date.now() + 3 * 1000; // 3 seconds
     const colors = ["#a786ff", "#fd8bbc", "#eca184", "#f8deb1"];
@@ -49,10 +49,9 @@ export default function Waitlist() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsModalOpen(true);
 
     try {
-      const res = await fetch("/api/audience", {
+      const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,6 +61,7 @@ export default function Waitlist() {
 
       const data = await res.json();
       console.log(data);
+      setUserId(data.id);
       setIsModalOpen(true);
       handleConfettiClick()
     } catch (error) {
@@ -128,6 +128,12 @@ export default function Waitlist() {
                 <span className="font-bold">waitlist.</span> Stay tuned for
                 exciting updates!
               </p>
+              {userId && (
+                <p>
+                  🎉 Congratulations! You are the number{" "}
+                  <span className="font-bold">{userId}</span> in our waitlist!
+                </p>
+              )}
             </ModalBody>
             <ModalFooter>
               <Button onPress={closeHandler} variant="flat">
