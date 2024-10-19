@@ -10,44 +10,77 @@ import {
   ModalFooter,
 } from "@nextui-org/react";
 import Image from "next/image";
+import confetti from "canvas-confetti";
+
 
 export default function Waitlist() {
   const [email, setEmail] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleSubmit = async(e: React.FormEvent) => {
+  const handleConfettiClick = () => {
+    const end = Date.now() + 3 * 1000; // 3 seconds
+    const colors = ["#a786ff", "#fd8bbc", "#eca184", "#f8deb1"];
+ 
+    const frame = () => {
+      if (Date.now() > end) return;
+ 
+      confetti({
+        particleCount: 2,
+        angle: 60,
+        spread: 55,
+        startVelocity: 60,
+        origin: { x: 0, y: 0.5 },
+        colors: colors,
+      });
+      confetti({
+        particleCount: 2,
+        angle: 120,
+        spread: 55,
+        startVelocity: 60,
+        origin: { x: 1, y: 0.5 },
+        colors: colors,
+      });
+ 
+      requestAnimationFrame(frame);
+    };
+ 
+    frame();
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsModalOpen(true);
 
     try {
-        const res = await fetch('/api/audience', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email }),
-        });
-  
-        const data = await res.json();
-        console.log(data)
-        setIsModalOpen(true);
+      const res = await fetch("/api/audience", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
 
-      } catch (error) {
-        console.log(error)
-      } 
-    };
-
-
+      const data = await res.json();
+      console.log(data);
+      setIsModalOpen(true);
+      handleConfettiClick()
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const closeHandler = () => {
     setIsModalOpen(false);
     setEmail("");
   };
 
+
+
+
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-xl p-6  bg-white rounded-lg shadow-lg text-center justify-center items-center">
-        <div className="flex flex-col  justify-center items-center mb-4">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 px-4">
+      <div className="w-full max-w-xl p-6 m-8 bg-white rounded-lg shadow-lg text-center justify-center items-center">
+        <div className="flex flex-col justify-center items-center mb-4">
           <Image
             src="/assets/logo-black-1200x1200.png"
             width={40}
@@ -55,22 +88,22 @@ export default function Waitlist() {
             alt="logo"
           />
           <div className="justify-center items-center flex">
-            <h1 className="flex  text-3xl font-bold mb-4 ">
+            <h1 className="text-3xl sm:text-4xl font-bold mb-4 p-2">
               Join
-              <span className="flex mx-4  font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                ThumbForge&apos;s{" "}
+              <span className="mx-2 bg-gradient-to-r from-blue-500 via-purple-500 to-red-500 bg-clip-text text-transparent">
+                ThumbForgeAi{" "}
               </span>{" "}
               Waitlist!
-            </h1>{" "}
+            </h1>
           </div>
         </div>
 
-        <p className="text-lg text-gray-600 mb-6">
+        <p className="text-base sm:text-lg text-gray-600 mb-6">
           Be the first to experience our{" "}
-          <span className="font-bold">AI-powered YouTube thumbnail </span>{" "}
+          <span className="font-bold">AI-powered YouTube thumbnail</span>{" "}
           generation tool. Get early access to create engaging thumbnails!
         </p>
-        <form onSubmit={handleSubmit} className="flex flex-col items-center">
+        <form onSubmit={handleSubmit} className="flex flex-col items-center w-full">
           <Input
             isClearable
             type="email"
@@ -80,12 +113,7 @@ export default function Waitlist() {
             required
             className="mb-4 w-full"
           />
-          <Button
-            type="submit"
-            variant="solid"
-            color="primary"
-            className="w-full"
-          >
+          <Button type="submit" variant="solid"  className="w-full bg-blue-600 text-white">
             Join Waitlist
           </Button>
         </form>
